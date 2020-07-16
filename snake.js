@@ -4,9 +4,11 @@ class Snake {
         this.snakeTableN = 10;
         this.snakeTable = new Array(this.snakeTableN);
         this.snake = [[0,0]];
+        this.apple = [[5,5]];
         this.snakeDir = 2; 
         this.dx = [0,1,0,-1];
         this.dy = [-1,0,1,0];
+        this.score = 0;
         for(var i = 0; i < this.snakeTableN; ++i) {
             this.snakeTable[i] = new Array(this.snakeTableN);
         }	
@@ -16,29 +18,44 @@ class Snake {
             this.snakeTable[this.snake[i][1]][this.snake[i][0]] = 1;
         }
     }
+    printApple() {
+        for(let i=0;i<this.apple.length;++i) {
+            this.snakeTable[this.apple[i][1]][this.apple[i][0]] = 2;
+        }
+    }
+
+    makeNewApple() {
+        this.score += 1;
+        this.apple.pop();
+        let x = 0;
+        let y = 0;
+        do {
+            x = parseInt(Math.random() * 10);
+            y = parseInt(Math.random() * 10); 
+        } while(this.snakeTable[y][x] == 1);
+        this.apple.push([x, y]);
+    }
+
+    eatApple(x, y) {
+        if(this.snakeTable[y][x] != 2) return false;
+        this.snakeTable[y][x] = 0;
+        this.makeNewApple();
+        this.updateScore();
+        
+        return true;
+    }
 
     moveSnake() {
         console.log("moveSnake");
-
-        console.log("printSnake");
-        console.log(this.snake.length);
-        for(let i=0;i<this.snake.length;++i) {
-            console.log("i : ", i);
-            console.log(this.snake[i][0], this.snake[i][1]);
-        }
-        for(let i=0;i<this.snake.length;++i) {
-            console.log("i : ", i);
-            console.log(this.snake[i][0], this.snake[i][1]);
-        }
+        console.log("snake length : ", snake.length);
         let nx = this.snake[0][0] + this.dx[this.snakeDir];
         let ny = this.snake[0][1] + this.dy[this.snakeDir];
-        console.log("nx : this.snake[0][0] (", this.snake[0][0],") + this.dx[this.snakeDir](",this.dx[this.snakeDir],')');
-        console.log("ny : this.snake[0][1] (", this.snake[0][1],") + this.dy[this.snakeDir](",this.dy[this.snakeDir],')');
-
-        console.log(nx, ny);
         if(nx < 0 || nx >= this.snakeTableN || ny < 0 || ny >= this.snakeTableN) return;
         this.snake.unshift([nx, ny]);
-        this.snake.pop();
+        if(!this.eatApple(nx, ny)) {
+            this.snake.pop();
+        }
+
         this.makeTable();
         this.printTable();
     }
@@ -51,7 +68,7 @@ class Snake {
             }
         }
         this.printSnake();
-        this.snakeTable[5][5] = 2;
+        this.printApple();
     }
 
     printTable() {
@@ -83,7 +100,14 @@ class Snake {
     snakeDirChange(code) {
         this.snakeDir = code;
     }
+
+    updateScore() {
+        var element = document.getElementById("scoreBoard");
+        if(element === null) return;
+        element.innerText = "Score : " + this.score;
+    }
 }
+
 
 
 

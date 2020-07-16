@@ -141,8 +141,10 @@
         </tr>
     </table>
 
-    <button onclick="console.log('click'); snake.moveSnake();">move</button>
-	<button onclick="snake.printTable();">printTable</button>
+    <button onclick="snake.moveSnake();">move</button>
+    <button onclick="snake.printTable();">printTable</button>
+    <button onclick="setInterval(function() {snake.moveSnake()}, 200);">gameStart!</button>
+    <h1 id="scoreBoard">Score : </h1>
 </body>
 
 <script type="text/javascript" src="snake.js"></script>
