@@ -1,0 +1,218 @@
+<head>
+	<style>
+		td {
+			width: 20px;
+			height:20px;
+			border: 1px solid #444444;
+		}
+		table {
+			 border: 3px solid #444444;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>h</h1>
+
+	<table>
+        <tr>
+            <td id="test00"> </td>
+            <td id="test01"> </td>
+            <td id="test02"> </td>
+            <td id="test03"> </td>
+            <td id="test04"> </td>
+            <td id="test05"> </td>
+            <td id="test06"> </td>
+            <td id="test07"> </td>
+            <td id="test08"> </td>
+            <td id="test09"> </td>
+        </tr>
+        <tr>
+            <td id="test10"> </td>
+            <td id="test11"> </td>
+            <td id="test12"> </td>
+            <td id="test13"> </td>
+            <td id="test14"> </td>
+            <td id="test15"> </td>
+            <td id="test16"> </td>
+            <td id="test17"> </td>
+            <td id="test18"> </td>
+            <td id="test19"> </td>
+        </tr>
+        <tr>
+            <td id="test20"> </td>
+            <td id="test21"> </td>
+            <td id="test22"> </td>
+            <td id="test23"> </td>
+            <td id="test24"> </td>
+            <td id="test25"> </td>
+            <td id="test26"> </td>
+            <td id="test27"> </td>
+            <td id="test28"> </td>
+            <td id="test29"> </td>
+        </tr>
+        <tr>
+            <td id="test30"> </td>
+            <td id="test31"> </td>
+            <td id="test32"> </td>
+            <td id="test33"> </td>
+            <td id="test34"> </td>
+            <td id="test35"> </td>
+            <td id="test36"> </td>
+            <td id="test37"> </td>
+            <td id="test38"> </td>
+            <td id="test39"> </td>
+        </tr>
+        <tr>
+            <td id="test40"> </td>
+            <td id="test41"> </td>
+            <td id="test42"> </td>
+            <td id="test43"> </td>
+            <td id="test44"> </td>
+            <td id="test45"> </td>
+            <td id="test46"> </td>
+            <td id="test47"> </td>
+            <td id="test48"> </td>
+            <td id="test49"> </td>
+        </tr>
+        <tr>
+            <td id="test50"> </td>
+            <td id="test51"> </td>
+            <td id="test52"> </td>
+            <td id="test53"> </td>
+            <td id="test54"> </td>
+            <td id="test55"> </td>
+            <td id="test56"> </td>
+            <td id="test57"> </td>
+            <td id="test58"> </td>
+            <td id="test59"> </td>
+        </tr>
+        <tr>
+            <td id="test60"> </td>
+            <td id="test61"> </td>
+            <td id="test62"> </td>
+            <td id="test63"> </td>
+            <td id="test64"> </td>
+            <td id="test65"> </td>
+            <td id="test66"> </td>
+            <td id="test67"> </td>
+            <td id="test68"> </td>
+            <td id="test69"> </td>
+        </tr>
+        <tr>
+            <td id="test70"> </td>
+            <td id="test71"> </td>
+            <td id="test72"> </td>
+            <td id="test73"> </td>
+            <td id="test74"> </td>
+            <td id="test75"> </td>
+            <td id="test76"> </td>
+            <td id="test77"> </td>
+            <td id="test78"> </td>
+            <td id="test79"> </td>
+        </tr>
+        <tr>
+            <td id="test80"> </td>
+            <td id="test81"> </td>
+            <td id="test82"> </td>
+            <td id="test83"> </td>
+            <td id="test84"> </td>
+            <td id="test85"> </td>
+            <td id="test86"> </td>
+            <td id="test87"> </td>
+            <td id="test88"> </td>
+            <td id="test89"> </td>
+        </tr>
+        <tr>
+            <td id="test90"> </td>
+            <td id="test91"> </td>
+            <td id="test92"> </td>
+            <td id="test93"> </td>
+            <td id="test94"> </td>
+            <td id="test95"> </td>
+            <td id="test96"> </td>
+            <td id="test97"> </td>
+            <td id="test98"> </td>
+            <td id="test99"> </td>
+        </tr>
+    </table>
+	
+	
+	<script>
+		class Snake {
+			constructor() {
+				this.snakeTableN = 10;
+				this.snakeTable = new Array(this.snakeTableN);
+				this.snake = [[0,0]];
+				this.snakeDir = 2; 
+				this.dx = [0,1,0,-1];
+				this.dy = [-1,0,1,0];
+				for(var i = 0; i < this.snakeTableN; ++i) {
+					this.snakeTable[i] = new Array(this.snakeTableN);
+				}	
+			}
+			printSnake() {
+				for(let i=0;i<this.snake.length;++i) {
+					this.snakeTable[this.snake[i][0]][this.snake[i][1]] = 1;
+				}
+			}
+
+			moveSnake() {
+				console.log("moveSnake");
+				let nx = this.snakeTable[0][0] + this.dx[this.snakeDir];
+				let ny = this.snakeTable[0][1] + this.dy[this.snakeDir];
+				this.snake.unshift([nx, ny]);
+				this.snake.pop();
+				this.makeTable();
+				this.printTable();
+			}
+
+			makeTable() {
+				console.log("makeTable");
+				for(var i = 0; i < this.snakeTableN; ++i) {
+					for(var j = 0; j< this.snakeTableN; ++j) {
+						this.snakeTable[i][j] = 0;
+					}
+				}
+				this.printSnake();
+				this.snakeTable[5][5] = 2;
+			}
+
+			printTable() {
+				console.log("printTable");
+				for(var i = 0; i < this.snakeTableN; ++i) {
+					for(var j = 0; j < this.snakeTableN; ++j) {
+						var makeID = "test" + String(i) + String(j);
+						console.log(makeID);
+						var element = document.getElementById(makeID);
+						//console.log("element : ", element);
+						if(element === null) {
+							continue;
+						};
+						let putValue = " ";
+						if(this.snakeTable[i][j] == 0) {
+							putValue = " ";
+						}
+						else if(this.snakeTable[i][j] == 1) {
+							element.style.backgroundColor = 'green';
+						}
+						else if(this.snakeTable[i][j] == 2) {
+							element.style.backgroundColor = 'red';
+						}
+						element.innerText = putValue;
+						document.write(element.innerText);
+					}
+				}
+			}
+		}
+
+		// below is main 
+		var snake = new Snake();
+		snake.makeTable();
+		snake.printTable();
+    
+	</script>
+	<p>
+	<button onclick="console.log('click'); snake.moveSnake();">move</button>
+	<button onclick="snake.printTable();">printTable</button>
+</body>
