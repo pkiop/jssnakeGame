@@ -1,6 +1,12 @@
 class Snake {
 
     constructor() {
+        this.interval;
+        this.enum = {
+            emptySpace : 0,
+            snakeSpace : 1,
+            appleSpace : 2
+        }
         this.snakeTableN = 10;
         this.snakeTable = new Array(this.snakeTableN);
         this.snake = [[0,0]];
@@ -13,14 +19,32 @@ class Snake {
             this.snakeTable[i] = new Array(this.snakeTableN);
         }	
     }
+
+    gameOverCheck(nx, ny) {
+        if(nx < 0 || nx >= this.snakeTableN || ny < 0 || ny >= this.snakeTableN) return true;
+        if(this.snakeTable[ny][nx] == this.enum.snakeSpace) return true;
+        return false;
+    }
+
+    clearGame() {
+        console.log("this is clear game. it predict to do new constructor process");
+        clearInterval(this.interval);
+        this.constroc
+    }
+
+    gameOverProcess() {
+        alert("game over, score is ", this.score);
+        this.clearGame();
+    }
+
     printSnake() {
         for(let i=0;i<this.snake.length;++i) {
-            this.snakeTable[this.snake[i][1]][this.snake[i][0]] = 1;
+            this.snakeTable[this.snake[i][1]][this.snake[i][0]] = this.enum.snakeSpace;
         }
     }
     printApple() {
         for(let i=0;i<this.apple.length;++i) {
-            this.snakeTable[this.apple[i][1]][this.apple[i][0]] = 2;
+            this.snakeTable[this.apple[i][1]][this.apple[i][0]] = this.enum.appleSpace;
         }
     }
 
@@ -32,12 +56,12 @@ class Snake {
         do {
             x = parseInt(Math.random() * 10);
             y = parseInt(Math.random() * 10); 
-        } while(this.snakeTable[y][x] == 1);
+        } while(this.snakeTable[y][x] == this.enum.snakeSpace);
         this.apple.push([x, y]);
     }
 
     eatApple(x, y) {
-        if(this.snakeTable[y][x] != 2) return false;
+        if(this.snakeTable[y][x] != this.enum.appleSpace) return false;
         this.snakeTable[y][x] = 0;
         this.makeNewApple();
         this.updateScore();
@@ -50,7 +74,10 @@ class Snake {
         console.log("snake length : ", snake.length);
         let nx = this.snake[0][0] + this.dx[this.snakeDir];
         let ny = this.snake[0][1] + this.dy[this.snakeDir];
-        if(nx < 0 || nx >= this.snakeTableN || ny < 0 || ny >= this.snakeTableN) return;
+        if(this.gameOverCheck(nx, ny)) {
+            this.gameOverProcess();
+            return;
+        }
         this.snake.unshift([nx, ny]);
         if(!this.eatApple(nx, ny)) {
             this.snake.pop();
@@ -64,7 +91,7 @@ class Snake {
         console.log("makeTable");
         for(var i = 0; i < this.snakeTableN; ++i) {
             for(var j = 0; j< this.snakeTableN; ++j) {
-                this.snakeTable[i][j] = 0;
+                this.snakeTable[i][j] = this.enum.emptySpace;
             }
         }
         this.printSnake();
@@ -108,10 +135,8 @@ class Snake {
     }
 }
 
-
-
-
 // below is main 
+/*
 var snake = new Snake();
 snake.makeTable();
-snake.printTable();
+snake.printTable();*/
