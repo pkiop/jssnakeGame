@@ -33,7 +33,7 @@ class Snake {
     }
 
     gameOverProcess() {
-        alert("game over, score is ", this.score);
+        alert("game over, score is " + this.score);
         this.clearGame();
     }
 
